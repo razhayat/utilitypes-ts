@@ -3,9 +3,11 @@
 	"version": "1.0.0",
 	"description": "Provides TypeScript utility types",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "vitest --run"
 	},
 	"devDependencies": {
-		"prettier": "^3.8.1"
+		"prettier": "^3.8.1",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
 	}
 }
