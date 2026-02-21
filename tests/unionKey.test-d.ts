@@ -44,6 +44,21 @@ describe("UnionKey", () => {
 		expectTypeOf<Result>().toEqualTypeOf<"x" | "y" | "z">();
 	});
 
+	it("should handle interfaces and classes", () => {
+		interface A {
+			a: 1;
+			b: 2;
+		}
+		class B {
+			public b: 2 = 2;
+			public c: 3 = 3;
+		}
+
+		type Result = UnionKey<A | B>;
+
+		expectTypeOf<Result>().toEqualTypeOf<"a" | "b" | "c">();
+	});
+
 	it("should return never for never", () => {
 		expectTypeOf<UnionKey<never>>().toEqualTypeOf<never>();
 	});
