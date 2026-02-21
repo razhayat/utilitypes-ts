@@ -9,3 +9,7 @@ export type StrictPick<T, K extends UnionKey<T>> = T extends T
 	: never;
 
 export type PartialRecord<K extends PropertyKey, V> = Partial<Record<K, V>>;
+
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & {};
