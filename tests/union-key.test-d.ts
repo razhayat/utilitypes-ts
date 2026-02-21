@@ -15,12 +15,12 @@ describe("UnionKey", () => {
 
 	it("should merge keys from union members", () => {
 		type A = {
-			a: 1;
+			readonly a: 1;
 			b: 2;
 		};
 		type B = {
 			b: 2;
-			c: 3;
+			c?: 3;
 		};
 
 		type Result = UnionKey<A | B>;
@@ -42,6 +42,21 @@ describe("UnionKey", () => {
 		type Result = UnionKey<A | B | C>;
 
 		expectTypeOf<Result>().toEqualTypeOf<"x" | "y" | "z">();
+	});
+
+	it("should handle interfaces and classes", () => {
+		interface A {
+			a: 1;
+			b: 2;
+		}
+		class B {
+			public b: 2 = 2;
+			public c: 3 = 3;
+		}
+
+		type Result = UnionKey<A | B>;
+
+		expectTypeOf<Result>().toEqualTypeOf<"a" | "b" | "c">();
 	});
 
 	it("should return never for never", () => {
