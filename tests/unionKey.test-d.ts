@@ -15,12 +15,12 @@ describe("UnionKey", () => {
 
 	it("should merge keys from union members", () => {
 		type A = {
-			a: 1;
+			readonly a: 1;
 			b: 2;
 		};
 		type B = {
 			b: 2;
-			c: 3;
+			c?: 3;
 		};
 
 		type Result = UnionKey<A | B>;
