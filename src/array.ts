@@ -9,3 +9,5 @@ type BuildTuple<
 		: BuildTuple<T, N, [...Current, T]>;
 
 export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
+
+export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
