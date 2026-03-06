@@ -17,3 +17,7 @@ export type Prettify<T> = {
 export type KeyOfType<T, V> = keyof {
 	[K in keyof T as T[K] extends V ? K : never]: void;
 };
+
+export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
+	[Key in T[K] extends PropertyKey ? T[K] : never]: Extract<T, Record<K, Key>>;
+};
