@@ -29,4 +29,10 @@ describe("Tuple", () => {
 
 		expectTypeOf<Result>().toEqualTypeOf<[Date, Date] | [Date, Date, Date]>();
 	});
+
+	it("should support number as length", () => {
+		type Result = Tuple<boolean, number>;
+
+		expectTypeOf<Result>().toEqualTypeOf<boolean[]>();
+	});
 });
