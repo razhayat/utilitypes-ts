@@ -1,7 +1,13 @@
 type BuildTuple<
 	T,
 	N extends number,
-	Curr extends unknown[],
-> = N extends Curr["length"] ? Curr : BuildTuple<T, N, [...Curr, T]>;
+	Current extends T[],
+> = N extends Current["length"]
+	? Current
+	: number extends N
+		? T[]
+		: BuildTuple<T, N, [...Current, T]>;
 
 export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
+
+export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
