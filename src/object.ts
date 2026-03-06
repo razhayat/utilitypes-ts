@@ -13,3 +13,7 @@ export type PartialRecord<K extends PropertyKey, V> = Partial<Record<K, V>>;
 export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
+
+export type KeyOfType<T, V> = keyof {
+	[K in keyof T as T[K] extends V ? K : never]: void;
+};
