@@ -1,5 +1,5 @@
 import { describe, it, expectTypeOf } from "vitest";
-import { Normalize, UnionKey } from "../src";
+import { Normalize, Prettify, UnionKey } from "../src";
 
 describe("Normalize", () => {
 	it("should preserve a single object type", () => {
@@ -7,7 +7,7 @@ describe("Normalize", () => {
 			a: string;
 		};
 
-		type Result = Normalize<A>;
+		type Result = Prettify<Normalize<A>>;
 
 		expectTypeOf<Result>().toEqualTypeOf<{
 			a: string;
@@ -24,7 +24,7 @@ describe("Normalize", () => {
 			b: number;
 		};
 
-		type Result = Normalize<A | B>;
+		type Result = Prettify<Normalize<A | B>>;
 		type Expected =
 			| { type: "a"; a: string; b?: never }
 			| { type: "b"; a?: never; b: number };
@@ -49,7 +49,7 @@ describe("Normalize", () => {
 		type C = {};
 
 		type Union = A | B | C;
-		type Result = Normalize<Union>;
+		type Result = Prettify<Normalize<Union>>;
 
 		type ExpectedA = {
 			type: "a";
@@ -98,7 +98,7 @@ describe("Normalize", () => {
 			fieldB3: "mouse";
 		};
 
-		type Result = Normalize<A | B, "fieldA1" | "fieldB1" | "fieldB3">;
+		type Result = Prettify<Normalize<A | B, "fieldA1" | "fieldB1" | "fieldB3">>;
 
 		type ExpectedA = {
 			type: "a";
@@ -120,7 +120,7 @@ describe("Normalize", () => {
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
 	});
 
-	it("should handle never", () => {
+	it("should preserve never", () => {
 		expectTypeOf<Normalize<never>>().toEqualTypeOf<never>();
 	});
 
