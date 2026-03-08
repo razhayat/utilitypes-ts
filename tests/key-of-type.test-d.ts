@@ -86,4 +86,10 @@ describe("KeyOfType", () => {
 
 		expectTypeOf<Result>().toEqualTypeOf<"a" | "b" | "c">();
 	});
+
+	it("should work with primitives", () => {
+		type Result = KeyOfType<string, number>;
+
+		expectTypeOf<Result>().toEqualTypeOf<"length">();
+	});
 });
