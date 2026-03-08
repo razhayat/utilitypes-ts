@@ -25,3 +25,7 @@ export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
 export type MakeRequired<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & Required<Pick<T, Extract<K, keyof T>>>
 	: never;
+
+export type MakeOptional<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
+	? Omit<T, K> & Partial<Pick<T, Extract<K, keyof T>>>
+	: never;
