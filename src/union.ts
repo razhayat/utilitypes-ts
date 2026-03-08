@@ -5,3 +5,17 @@ export type Normalize<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	: never;
 
 export type Unbind<T> = Omit<Normalize<T>, never>;
+
+type ExcludeExtractConstraint<T> =
+	| Exclude<T, Record<PropertyKey, unknown>>
+	| Partial<Normalize<Extract<T, Record<PropertyKey, unknown>>>>;
+
+export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
+	T,
+	U
+>;
+
+export type StrictExtract<T, U extends ExcludeExtractConstraint<T>> = Extract<
+	T,
+	U
+>;
