@@ -92,6 +92,24 @@ describe("MakeMutable", () => {
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
 	});
 
+	it("should allow interfaces", () => {
+		interface Person {
+			name: string;
+			readonly age: number;
+			readonly birth: Date;
+			readonly death: Date;
+		}
+
+		type Result = Prettify<MakeMutable<Person, "age" | "death">>;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			name: string;
+			age: number;
+			readonly birth: Date;
+			death: Date;
+		}>();
+	});
+
 	it("should only allow union keys", () => {
 		type A = {
 			readonly type: "a";
