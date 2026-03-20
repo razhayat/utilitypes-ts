@@ -37,6 +37,18 @@ describe("KeyOfType", () => {
 		expectTypeOf<Result>().toEqualTypeOf<never>();
 	});
 
+	it("should work with interfaces", () => {
+		interface Input {
+			a: string;
+			b: number;
+			c: string;
+		}
+
+		type Result = KeyOfType<Input, string>;
+
+		expectTypeOf<Result>().toEqualTypeOf<"a" | "c">();
+	});
+
 	it("should work with union value types", () => {
 		type Input = {
 			a: string;
