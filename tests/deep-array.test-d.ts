@@ -50,7 +50,7 @@ describe("DeepArray", () => {
 		>;
 	});
 
-	it("should not accept a non array value", () => {
+	it("should reject a non array value", () => {
 		// @ts-expect-error needs to be an array
 		true satisfies DeepArray<boolean>;
 	});
