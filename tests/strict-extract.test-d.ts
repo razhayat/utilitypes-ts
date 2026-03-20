@@ -38,6 +38,22 @@ describe("StrictExtract", () => {
 		expectTypeOf<Result>().toEqualTypeOf<Circle>();
 	});
 
+	it("should support interfaces", () => {
+		interface Circle {
+			type: "circle";
+			radius: number;
+		}
+
+		type Result = StrictExtract<
+			Circle,
+			{
+				type: "circle";
+			}
+		>;
+
+		expectTypeOf<Result>().toEqualTypeOf<Circle>();
+	});
+
 	it("should extract multiple objects from a union of objects", () => {
 		type Circle = {
 			type: "circle";

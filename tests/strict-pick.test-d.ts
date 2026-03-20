@@ -15,6 +15,19 @@ describe("StrictPick", () => {
 		}>();
 	});
 
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+		}
+
+		type Result = StrictPick<Person, "name">;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			name: string;
+		}>();
+	});
+
 	it("should distribute over union members", () => {
 		type A = {
 			a: string;

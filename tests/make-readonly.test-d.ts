@@ -92,6 +92,24 @@ describe("MakeReadonly", () => {
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
 	});
 
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+			readonly birth: Date;
+			readonly death: Date;
+		}
+
+		type Result = Prettify<MakeReadonly<Person, "age" | "death">>;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			name: string;
+			readonly age: number;
+			readonly birth: Date;
+			readonly death: Date;
+		}>();
+	});
+
 	it("should only allow union keys", () => {
 		type A = {
 			type: "a";

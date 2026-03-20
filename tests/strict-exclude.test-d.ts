@@ -38,6 +38,22 @@ describe("StrictExclude", () => {
 		expectTypeOf<Result>().toEqualTypeOf<Square>();
 	});
 
+	it("should support interfaces", () => {
+		interface Circle {
+			type: "circle";
+			radius: number;
+		}
+
+		type Result = StrictExclude<
+			Circle,
+			{
+				type: "circle";
+			}
+		>;
+
+		expectTypeOf<Result>().toEqualTypeOf<never>();
+	});
+
 	it("should exclude multiple objects from a union of objects", () => {
 		type Circle = {
 			type: "circle";
