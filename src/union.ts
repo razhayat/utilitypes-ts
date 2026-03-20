@@ -6,9 +6,13 @@ export type Normalize<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 
 export type Unbind<T> = Omit<Normalize<T>, never>;
 
+type ExcludeExtractPreservedMember<T> =
+	| Exclude<T, Record<PropertyKey, any>>
+	| Extract<T, Function>;
+
 type ExcludeExtractConstraint<T> =
-	| Exclude<T, Record<PropertyKey, unknown>>
-	| Partial<Normalize<Extract<T, Record<PropertyKey, unknown>>>>;
+	| Extract<T, ExcludeExtractPreservedMember<T>>
+	| Partial<Normalize<Exclude<T, ExcludeExtractPreservedMember<T>>>>;
 
 export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
 	T,
