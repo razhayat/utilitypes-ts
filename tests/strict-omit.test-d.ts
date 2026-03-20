@@ -15,6 +15,19 @@ describe("StrictOmit", () => {
 		}>();
 	});
 
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+		}
+
+		type Result = StrictOmit<Person, "name">;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			age: number;
+		}>();
+	});
+
 	it("should distribute over union members", () => {
 		type A = {
 			a: string;
