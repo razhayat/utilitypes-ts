@@ -14,6 +14,18 @@ describe("Normalize", () => {
 		}>();
 	});
 
+	it("should support interfaces", () => {
+		interface A {
+			a: string;
+		}
+
+		type Result = Prettify<Normalize<A>>;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			a: string;
+		}>();
+	});
+
 	it("should make every union member have the same keys as the other members", () => {
 		type A = {
 			type: "a";
