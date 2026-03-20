@@ -55,7 +55,7 @@ describe("GroupBy", () => {
 		}>();
 	});
 
-	it("should work with interfaces", () => {
+	it("should support interfaces", () => {
 		interface A {
 			type: "a";
 			fieldA: number;

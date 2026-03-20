@@ -37,7 +37,7 @@ describe("KeyOfType", () => {
 		expectTypeOf<Result>().toEqualTypeOf<never>();
 	});
 
-	it("should work with interfaces", () => {
+	it("should support interfaces", () => {
 		interface Input {
 			a: string;
 			b: number;

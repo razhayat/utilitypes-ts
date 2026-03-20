@@ -92,7 +92,7 @@ describe("MakeMutable", () => {
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
 	});
 
-	it("should allow interfaces", () => {
+	it("should support interfaces", () => {
 		interface Person {
 			name: string;
 			readonly age: number;
