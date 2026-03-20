@@ -50,6 +50,11 @@ describe("DeepArray", () => {
 		>;
 	});
 
+	it("should not accept a non array value", () => {
+		// @ts-expect-error needs to be an array
+		true satisfies DeepArray<boolean>;
+	});
+
 	it("should reject incorrect types", () => {
 		[
 			// @ts-expect-error string is not a number
