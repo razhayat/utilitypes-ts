@@ -1,14 +1,23 @@
 import { describe, it, expectTypeOf } from "vitest";
 import { Unbind } from "../src";
 
-// can this be pushed
-
 describe("Unbind", () => {
 	it("should preserve a single object type", () => {
 		type Person = {
 			name: string;
 			age: number;
 		};
+
+		type Result = Unbind<Person>;
+
+		expectTypeOf<Result>().toEqualTypeOf<Person>();
+	});
+
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+		}
 
 		type Result = Unbind<Person>;
 
