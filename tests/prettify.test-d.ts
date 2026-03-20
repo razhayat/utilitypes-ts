@@ -18,6 +18,22 @@ describe("Prettify", () => {
 		}>();
 	});
 
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+			hobbies: string[];
+		}
+
+		type Result = Prettify<Person>;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			name: string;
+			age: number;
+			hobbies: string[];
+		}>();
+	});
+
 	it("should flatten intersections", () => {
 		type A = {
 			a: string;
