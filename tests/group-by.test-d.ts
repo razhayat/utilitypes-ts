@@ -55,6 +55,24 @@ describe("GroupBy", () => {
 		}>();
 	});
 
+	it("should work with interfaces", () => {
+		interface A {
+			type: "a";
+			fieldA: number;
+		}
+		interface B {
+			type: "b";
+			fieldB: string;
+		}
+
+		type Result = GroupBy<A | B, "type">;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			a: A;
+			b: B;
+		}>();
+	});
+
 	it("should work with numeric keys", () => {
 		type A = {
 			id: 1;
