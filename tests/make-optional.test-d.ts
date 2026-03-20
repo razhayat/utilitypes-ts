@@ -92,6 +92,24 @@ describe("MakeOptional", () => {
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
 	});
 
+	it("should support interfaces", () => {
+		interface Person {
+			name: string;
+			age: number;
+			birth: Date;
+			death: Date;
+		}
+
+		type Result = Prettify<MakeOptional<Person, "age" | "death">>;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			name: string;
+			age?: number;
+			birth: Date;
+			death?: Date;
+		}>();
+	});
+
 	it("should only allow union keys", () => {
 		type A = {
 			type: "a";
