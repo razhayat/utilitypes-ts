@@ -32,7 +32,7 @@ describe("Tag", () => {
 		expectTypeOf<Expected>().toExtend<Gmail>();
 	});
 
-	it("should extract union of accumulated tags", () => {
+	it("should allow multi-tagged types to extend each individual tag", () => {
 		type Email = Tag<number, "Email">;
 		type Google = Tag<number, "Google">;
 		type Gmail = Tag<number, "Email" | "Google">;
