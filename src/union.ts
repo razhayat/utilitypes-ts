@@ -25,3 +25,9 @@ export type StrictExtract<T, U extends ExcludeExtractConstraint<T>> = Extract<
 	T,
 	U
 >;
+
+export type UnionToIntersection<T> = (
+	T extends T ? (value: T) => void : never
+) extends (value: infer R) => void
+	? R & T
+	: never;
