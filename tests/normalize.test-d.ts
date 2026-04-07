@@ -187,6 +187,21 @@ describe("Normalize", () => {
 		>();
 	});
 
+	it("should work with tuples", () => {
+		type A = [number, string];
+		type B = {
+			type: "b";
+			valueB: A;
+		};
+		type C = Date;
+
+		type Result = Normalize<A | B | C>;
+
+		expectTypeOf<Result>().toHaveProperty("0");
+		expectTypeOf<Result>().toHaveProperty("valueB");
+		expectTypeOf<Result>().toHaveProperty("getTime");
+	});
+
 	it("should preserve string primitives", () => {
 		type Primitive = "hi";
 
@@ -221,6 +236,10 @@ describe("Normalize", () => {
 
 	it("should preserve never", () => {
 		expectTypeOf<Normalize<never>>().toEqualTypeOf<never>();
+	});
+
+	it("should preserve any", () => {
+		expectTypeOf<Normalize<any>>().toEqualTypeOf<any>();
 	});
 
 	it("should not preserve unknown", () => {
