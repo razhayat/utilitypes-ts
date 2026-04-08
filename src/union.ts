@@ -128,6 +128,43 @@ export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
 	U
 >;
 
+/**
+ * A stricter version of `Extract` that enforces valid extraction shapes.
+ *
+ * `StrictExtract` tries to prevent accidentally extracting
+ * values that could never exist in `T`.
+ *
+ * @template T - The source union type
+ * @template U - The extraction type (must conform to `T`)
+ *
+ * @example
+ * // Basic usage (same as Extract)
+ * type Result = StrictExtract<"a" | "b" | "c", "a">;
+ * //   ^?
+ * // "a"
+ *
+ * @example
+ * // Extracting a union member by shape
+ * type Input =
+ *   | { type: "a"; value: string }
+ *   | { type: "b"; value: number };
+ *
+ * type Result = StrictExtract<Input, { type: "a" }>;
+ * //   ^?
+ * // { type: "a"; value: string }
+ *
+ * @example
+ * // Invalid extraction is rejected
+ * type Input =
+ *   | { a: string }
+ *   | { b: number };
+ *
+ * type Invalid = StrictExtract<
+ *   Input,
+ *   // Compiler error - not compatible with any member of Input
+ *   { c: boolean }
+ * >;
+ */
 export type StrictExtract<T, U extends ExcludeExtractConstraint<T>> = Extract<
 	T,
 	U
