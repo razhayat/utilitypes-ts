@@ -80,6 +80,20 @@ export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
 
+/**
+ * Extracts keys from `T` whose value types extend `V`.
+ *
+ * @template T - The target type
+ * @template V - The value type to match against
+ *
+ * @example
+ * type Result = KeyOfType<
+ * 	{ a: string; b: number; c: string },
+ * 	string
+ * >;
+ * //   ^?
+ * // "a" | "c"
+ */
 export type KeyOfType<T, V> = keyof {
 	[K in keyof (T extends T ? T : never) as T[K] extends V ? K : never]: void;
 };
