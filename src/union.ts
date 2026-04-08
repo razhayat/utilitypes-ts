@@ -51,6 +51,31 @@ export type Normalize<T, K extends UnionKey<T> = UnionKey<T>> = T extends
 	? T
 	: T & Partial<Record<Exclude<K, keyof T>, never>>;
 
+/**
+ * Collapses a union type into a single object type by merging all members.
+ *
+ * Each property becomes:
+ * - A union of all possible value types across the union members
+ * - Optional if it does not exist in every member
+ *
+ * This effectively removes the relationship between fields (i.e. "unbinds"
+ * discriminated unions), making all properties independent.
+ *
+ * @template T - The target union type
+ *
+ * @example
+ * // Discriminated union becomes "loose"
+ * type Result = Unbind<
+ * 	| { kind: "success"; data: string }
+ * 	| { kind: "error"; error: Error }
+ * >;
+ * //   ^?
+ * // {
+ * //   kind: "success" | "error";
+ * //   data?: string;
+ * //   error?: Error;
+ * // }
+ */
 export type Unbind<T> = Omit<Normalize<T>, never>;
 
 type ExcludeExtractPreservedMember<T> =
