@@ -1,5 +1,33 @@
 import { UnionKey } from "./union";
 
+/**
+ * Strictly omits keys `K` from each member of a union `T`.
+ *
+ * This behaves like `Omit`, but distributes over unions and **only allows
+ * keys that actually exist in the union**. Passing an invalid key will
+ * result in a type error.
+ *
+ * @template T - The target type (can be a union)
+ * @template K - Keys to remove (must exist in `UnionKey<T>`)
+ *
+ * @example
+ * // Compile-time error: "b" is not a key of the given type
+ * type Invalid = StrictOmit<
+ *   { a: string },
+ *   "b"
+ * >;
+ *
+ * @example
+ * // Omits only from the member that has the key
+ * type Result = StrictOmit<
+ *   | { type: "a"; name: string }
+ *   | { type: "b"; age: number },
+ *   "name"
+ * >;
+ * //   ^?
+ * // | { type: "a" }
+ * // | { type: "b"; age: number }
+ */
 export type StrictOmit<T, K extends UnionKey<T>> = T extends T
 	? Omit<T, K>
 	: never;
