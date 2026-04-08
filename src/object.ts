@@ -8,6 +8,16 @@ export type StrictPick<T, K extends UnionKey<T>> = T extends T
 	? Pick<T, Extract<K, keyof T>>
 	: never;
 
+/**
+ * Equivalent to `Partial<Record<K, V>>`.
+ * @example
+ * type Result = PartialRecord<"a" | "b", number>;
+ * //   ^?
+ * // {
+ * //   a?: number;
+ * //   b?: number;
+ * // };
+ */
 export type PartialRecord<K extends PropertyKey, V> = Partial<Record<K, V>>;
 
 export type Prettify<T> = {
