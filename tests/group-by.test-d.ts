@@ -55,6 +55,25 @@ describe("GroupBy", () => {
 		}>();
 	});
 
+	it("should group by a key whose value is a union", () => {
+		type Apple = {
+			type: "fruit";
+			color: "red" | "yellow" | "green";
+		};
+		type Banana = {
+			type: "fruit";
+			color: "yellow";
+		};
+
+		type Result = GroupBy<Apple | Banana, "color">;
+
+		expectTypeOf<Result>().toEqualTypeOf<{
+			red: Apple;
+			yellow: Apple | Banana;
+			green: Apple;
+		}>();
+	});
+
 	it("should support interfaces", () => {
 		interface A {
 			type: "a";

@@ -99,7 +99,11 @@ export type KeyOfType<T, V> = keyof {
 };
 
 export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
-	[Key in T[K] extends PropertyKey ? T[K] : never]: Extract<T, Record<K, Key>>;
+	[Key in T[K] extends PropertyKey ? T[K] : never]: T extends T
+		? Key extends T[K]
+			? T
+			: never
+		: never;
 };
 
 export type MakeRequired<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
