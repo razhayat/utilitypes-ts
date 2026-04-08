@@ -96,6 +96,19 @@ export type StrictExtract<T, U extends ExcludeExtractConstraint<T>> = Extract<
 	U
 >;
 
+/**
+ * Converts a union type into an intersection type.
+ *
+ * @template T - The union type to convert
+ *
+ * @example
+ * type Result = UnionToIntersection<
+ * 	| { a: string }
+ * 	| { b: number }
+ * >;
+ * //   ^?
+ * // { a: string } & { b: number }
+ */
 export type UnionToIntersection<T> = (
 	T extends T ? (value: T) => void : never
 ) extends (value: infer R) => void
