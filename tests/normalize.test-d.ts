@@ -51,16 +51,16 @@ describe("Normalize", () => {
 			fieldA1: Date;
 			fieldA2: string[];
 		};
-		type B = {
+		interface B {
 			type: "b";
 			value: number;
 			fieldB1: B[];
 			fieldB2: [number, null, number];
 			fieldB3: "mouse";
-		};
+		}
 		type C = {};
 
-		type Union = A | B | C;
+		type Union = A | B | C | never;
 		type Result = Prettify<Normalize<Union>>;
 
 		type ExpectedA = {
@@ -96,12 +96,14 @@ describe("Normalize", () => {
 	});
 
 	it("should allow normalizing only some keys", () => {
-		type A = {
-			type: "a";
-			value: string;
-			fieldA1: Date;
-			fieldA2: string[];
-		};
+		class A {
+			type: "a" = "a";
+			value: string = "";
+			fieldA1: Date = new Date();
+			fieldA2: string[] = [];
+
+			doStuff() {}
+		}
 		type B = {
 			type: "b";
 			value: number;
@@ -110,13 +112,16 @@ describe("Normalize", () => {
 			fieldB3: "mouse";
 		};
 
-		type Result = Prettify<Normalize<A | B, "fieldA1" | "fieldB1" | "fieldB3">>;
+		type Result = Prettify<
+			Normalize<A | B, "fieldA1" | "doStuff" | "fieldB1" | "fieldB3">
+		>;
 
 		type ExpectedA = {
 			type: "a";
 			value: string;
 			fieldA1: Date;
 			fieldA2: string[];
+			doStuff: VoidFunction;
 			fieldB1?: never;
 			fieldB3?: never;
 		};
@@ -127,6 +132,7 @@ describe("Normalize", () => {
 			fieldB2: [number, null, number];
 			fieldB3: "mouse";
 			fieldA1?: never;
+			doStuff?: never;
 		};
 
 		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
@@ -166,7 +172,7 @@ describe("Normalize", () => {
 		};
 		type B = {
 			type: "b";
-			b: number;
+			readonly b: number;
 		};
 
 		type Result = Prettify<Normalize<A | B | null | undefined>>;
@@ -179,7 +185,7 @@ describe("Normalize", () => {
 		type ExpectedB = {
 			type: "b";
 			a?: never;
-			b: number;
+			readonly b: number;
 		};
 
 		expectTypeOf<Result>().toEqualTypeOf<
@@ -200,6 +206,105 @@ describe("Normalize", () => {
 		expectTypeOf<Result>().toHaveProperty("0");
 		expectTypeOf<Result>().toHaveProperty("valueB");
 		expectTypeOf<Result>().toHaveProperty("getTime");
+	});
+
+	it("should handle intersections inside unions", () => {
+		type Base = {
+			base: string;
+		};
+		type A = Base & {
+			a: number;
+		};
+		type B = Base & {
+			b: boolean;
+		};
+
+		type Result = Prettify<Normalize<A | B>>;
+
+		type ExpectedA = {
+			base: string;
+			a: number;
+			b?: never;
+		};
+		type ExpectedB = {
+			base: string;
+			b: boolean;
+			a?: never;
+		};
+
+		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
+	});
+
+	it("should handle symbol keys", () => {
+		const symbolA = Symbol();
+		const symbolB = Symbol();
+
+		type A = {
+			[symbolA]: string;
+			value: number;
+		};
+		type B = {
+			[symbolB]: number;
+			value: string;
+		};
+
+		type Result = Prettify<Normalize<A | B>>;
+
+		type ExpectedA = {
+			[symbolA]: string;
+			value: number;
+			[symbolB]?: never;
+		};
+		type ExpectedB = {
+			[symbolB]: number;
+			value: string;
+			[symbolA]?: never;
+		};
+
+		expectTypeOf<Result>().toEqualTypeOf<ExpectedA | ExpectedB>();
+	});
+
+	it("should not normalize deeply nested objects", () => {
+		type A = {
+			user: {
+				name: string;
+				displayName: string;
+			};
+		};
+		type B = {
+			user: {
+				id: string;
+				organization: string;
+			};
+		};
+
+		type Result = Prettify<Normalize<A | B>>;
+
+		expectTypeOf<Result>().toEqualTypeOf<A | B>();
+	});
+
+	it("should handle function unions", () => {
+		type A = () => string;
+		type B = {
+			hello: 12;
+		};
+
+		type Result = Normalize<A | B>;
+
+		(value: Result) => {
+			if (value.hello) {
+				return;
+			}
+
+			expectTypeOf(value).toExtend<A>();
+		};
+	});
+
+	it("should handle union of primitives only", () => {
+		type Result = Normalize<string | number>;
+
+		expectTypeOf<Result>().toHaveProperty("endsWith");
+		expectTypeOf<Result>().toHaveProperty("toExponential");
 	});
 
 	it("should preserve string primitives", () => {
