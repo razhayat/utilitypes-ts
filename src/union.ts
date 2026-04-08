@@ -1,3 +1,18 @@
+/**
+ * Extracts all keys from a union type.
+ *
+ * Unlike `keyof`, which only returns keys common to all members,
+ * this type returns all keys across the given union
+ *
+ *
+ * @example
+ * type Result = UnionKey<
+ *   | { a: string }
+ *   | { b: number }
+ * >;
+ * //   ^?
+ * // "a" | "b"
+ */
 export type UnionKey<T> = T extends T ? keyof T : never;
 
 export type Normalize<T, K extends UnionKey<T> = UnionKey<T>> = T extends
