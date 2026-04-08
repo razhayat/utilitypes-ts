@@ -86,6 +86,43 @@ type ExcludeExtractConstraint<T> =
 	| Extract<T, ExcludeExtractPreservedMember<T>>
 	| Partial<Normalize<Exclude<T, ExcludeExtractPreservedMember<T>>>>;
 
+/**
+ * A stricter version of `Exclude` that enforces valid exclusion shapes.
+ *
+ * `StrictExclude` tries to prevent accidentally excluding
+ * values that could never exist in `T`.
+ *
+ * @template T - The source union type
+ * @template U - The exclusion type (must conform to `T`)
+ *
+ * @example
+ * // Basic usage (same as Exclude)
+ * type Result = StrictExclude<"a" | "b" | "c", "a">;
+ * //   ^?
+ * // "b" | "c"
+ *
+ * @example
+ * // Excluding a union member by shape
+ * type Input =
+ *   | { type: "a"; value: string }
+ *   | { type: "b"; value: number };
+ *
+ * type Result = StrictExclude<Input, { type: "a" }>;
+ * //   ^?
+ * // { type: "b"; value: number }
+ *
+ * @example
+ * // Invalid exclusion is rejected
+ * type Input =
+ *   | { a: string }
+ *   | { b: number };
+ *
+ * type Invalid = StrictExclude<
+ *   Input,
+ *   // Compiler error - not compatible with any member of Input
+ *   { c: boolean }
+ * >;
+ */
 export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
 	T,
 	U
