@@ -55,4 +55,14 @@ export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
  */
 export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
 
+/**
+ * Recursively defines an array of `T` where elements can be nested arrays
+ * of arbitrary depth.
+ *
+ * @template T - The element type
+ *
+ * @example
+ * const a: DeepArray<string> = ["a", "b"];
+ * const b: DeepArray<string> = ["a", ["b", "c", []], [["d"]]];
+ */
 export type DeepArray<T> = (T | DeepArray<T>)[];
