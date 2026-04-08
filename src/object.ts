@@ -32,6 +32,34 @@ export type StrictOmit<T, K extends UnionKey<T>> = T extends T
 	? Omit<T, K>
 	: never;
 
+/**
+ * Strictly picks keys `K` from each member of a union `T`.
+ *
+ * This behaves like `Pick`, but distributes over unions and **only allows
+ * keys that actually exist in the union**. Passing an invalid key will
+ * result in a type error.
+ *
+ * @template T - The target type (can be a union)
+ * @template K - Keys to pick (must exist in `UnionKey<T>`)
+ *
+ * @example
+ * // Compile-time error: "b" is not a key of the given type
+ * type Invalid = StrictPick<
+ *   { a: string },
+ *   "b"
+ * >;
+ *
+ * @example
+ * // Picks only from the member that has the key
+ * type Result = StrictPick<
+ *   | { type: "a"; name: string }
+ *   | { type: "b"; age: number },
+ *   "type" | "name"
+ * >;
+ * //   ^?
+ * // | { type: "a"; name: string; }
+ * // | { type: "b"; }
+ */
 export type StrictPick<T, K extends UnionKey<T>> = T extends T
 	? Pick<T, Extract<K, keyof T>>
 	: never;
