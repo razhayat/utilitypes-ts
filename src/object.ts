@@ -98,6 +98,43 @@ export type KeyOfType<T, V> = keyof {
 	[K in keyof (T extends T ? T : never) as T[K] extends V ? K : never]: void;
 };
 
+/**
+ * Groups a type `T` by the values of a key `K`.
+ *
+ * @template T - The target type (typically a union of objects)
+ * @template K - The key to group by (must be a key of `T` with a `PropertyKey` type)
+ *
+ * @example
+ * type Apple = {
+ * 	type: "fruit";
+ * 	color: "green";
+ * };
+ *
+ * type Banana = {
+ * 	type: "fruit";
+ * 	color: "yellow";
+ * };
+ *
+ * type Tomato = {
+ * 	type: "vegetable";
+ * 	color: "red";
+ * };
+ *
+ * type GroupedByType = GroupBy<Apple | Banana | Tomato, "type">;
+ * //   ^?
+ * // {
+ * //   fruit: Apple | Banana;
+ * //   vegetable: Tomato;
+ * // }
+ *
+ * type GroupedByColor = GroupBy<Apple | Banana | Tomato, "color">;
+ * //   ^?
+ * // {
+ * //   green: Apple;
+ * //   yellow: Banana;
+ * //   red: Tomato;
+ * // }
+ */
 export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
 	[Key in T[K] extends PropertyKey ? T[K] : never]: T extends T
 		? Key extends T[K]
