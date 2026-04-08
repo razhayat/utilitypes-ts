@@ -35,6 +35,24 @@ type BuildTuple<
  */
 export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
 
+/**
+ * Creates an array type with a minimum length of `N`.
+ *
+ * The first `N` elements are required, and any additional elements
+ * are optional and of the same type `T`.
+ *
+ * @template T - The element type
+ * @template N - The minimum required length
+ *
+ * @example
+ * type Result = MinLengthArray<string, 1>;
+ * //   ^?
+ * // [string, ...string[]]
+ *
+ * @example
+ * //@ts-expect-error - requires at least 2 elements
+ * const invalid: MinLengthArray<boolean, 2> = [true];
+ */
 export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
 
 export type DeepArray<T> = (T | DeepArray<T>)[];
