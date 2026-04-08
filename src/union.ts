@@ -119,7 +119,7 @@ type ExcludeExtractConstraint<T> =
  *
  * type Invalid = StrictExclude<
  *   Input,
- *   // Compiler error - not compatible with any member of Input
+ *   //@ts-expect-error - not compatible with any member of Input
  *   { c: boolean }
  * >;
  */
@@ -161,7 +161,7 @@ export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
  *
  * type Invalid = StrictExtract<
  *   Input,
- *   // Compiler error - not compatible with any member of Input
+ *   //@ts-expect-error - not compatible with any member of Input
  *   { c: boolean }
  * >;
  */
