@@ -243,6 +243,30 @@ export type MakeReadonly<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & Readonly<Pick<T, Extract<K, keyof T>>>
 	: never;
 
+/**
+ * Makes specified keys `K` mutable in each member of a union `T`.
+ *
+ * This distributes over unions, ensuring each member is processed
+ * individually. Only keys that exist in each member are affected.
+ *
+ * @template T - The target type (can be a union)
+ * @template K - Keys to make mutable (defaults to all union keys)
+ *
+ * @example
+ * type Result = MakeMutable<{ readonly a: string; readonly b: number }>;
+ * //   ^?
+ * // { a: string; b: number }
+ *
+ * @example <caption>Works with unions</caption>
+ * type Result = MakeMutable<{ readonly a: string } | { readonly b: number }>;
+ * //   ^?
+ * // { a: string } | { b: number }
+ *
+ * @example <caption>Only make specific keys mutable</caption>
+ * type Result = MakeMutable<{ readonly a: string } | { readonly b: number }, "a">;
+ * //   ^?
+ * // { a: string } | { readonly b: number }
+ */
 export type MakeMutable<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & {
 			-readonly [Key in Extract<K, keyof T>]: T[Key];
