@@ -159,6 +159,30 @@ export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
 		: never;
 };
 
+/**
+ * Makes specified keys `K` required in each member of a union `T`.
+ *
+ * This distributes over unions, ensuring each union member is processed
+ * individually. Only keys that exist in each member are affected.
+ *
+ * @template T - The target type (can be a union)
+ * @template K - Keys to make required (defaults to all union keys)
+ *
+ * @example
+ * type Result = MakeRequired<{ a?: string; b?: number }>;
+ * //   ^?
+ * // { a: string; b: number }
+ *
+ * @example <caption>Works with unions</caption>
+ * type Result = MakeRequired<{ a?: string } | { b?: number }>;
+ * //   ^?
+ * // { a: string } | { b: number }
+ *
+ * @example <caption>Only make specific keys required</caption>
+ * type Result = MakeRequired<{ a?: string } | { b?: number }, "a">;
+ * //   ^?
+ * // { a: string } | { b?: number }
+ */
 export type MakeRequired<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & Required<Pick<T, Extract<K, keyof T>>>
 	: never;
