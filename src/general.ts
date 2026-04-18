@@ -31,6 +31,27 @@ import { Normalize, UnionKey } from "./union";
  */
 export type ValueOf<T, K extends UnionKey<T> = UnionKey<T>> = Normalize<T>[K];
 
+/**
+ * Provides autocomplete suggestions while still allowing any value of `Base`.
+ *
+ * This is useful when you want to suggest a set of known options in editors,
+ * but not restrict the type strictly to those options.
+ *
+ * @template Options - Suggested literal values
+ * @template Base - The underlying type (defaults to `string`)
+ *
+ * @example
+ * type Color = Suggestion<"red" | "blue">;
+ *
+ * const a: Color = "red";   // ✅ suggested
+ * const b: Color = "green"; // ✅ allowed, not suggested
+ *
+ * @example <caption>Works with non-string base types</caption>
+ * type Size = Suggestion<1 | 2 | 3, number>;
+ *
+ * const a: Size = 2;  // ✅ suggested
+ * const b: Size = 10; // ✅ allowed, not suggested
+ */
 export type Suggestion<Options extends Base, Base = string> =
 	| Options
 	| (Base & {});
