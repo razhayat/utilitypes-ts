@@ -215,6 +215,30 @@ export type MakeOptional<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & Partial<Pick<T, Extract<K, keyof T>>>
 	: never;
 
+/**
+ * Makes specified keys `K` readonly in each member of a union `T`.
+ *
+ * This distributes over unions, ensuring each member is processed
+ * individually. Only keys that exist in each member are affected.
+ *
+ * @template T - The target type (can be a union)
+ * @template K - Keys to make readonly (defaults to all union keys)
+ *
+ * @example
+ * type Result = MakeReadonly<{ a: string; b: number }>;
+ * //   ^?
+ * // { readonly a: string; readonly b: number }
+ *
+ * @example <caption>Works with unions</caption>
+ * type Result = MakeReadonly<{ a: string } | { b: number }>;
+ * //   ^?
+ * // { readonly a: string } | { readonly b: number }
+ *
+ * @example <caption>Only make specific keys readonly</caption>
+ * type Result = MakeReadonly<{ a: string } | { b: number }, "a">;
+ * //   ^?
+ * // { readonly a: string } | { b: number }
+ */
 export type MakeReadonly<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
 	? Omit<T, K> & Readonly<Pick<T, Extract<K, keyof T>>>
 	: never;
