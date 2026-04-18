@@ -56,6 +56,33 @@ export type Suggestion<Options extends Base, Base = string> =
 	| Options
 	| (Base & {});
 
+/**
+ * Type-level equivalent of the `satisfies` operator in TypeScript.
+ *
+ * Ensures that `T` conforms to `Base`.
+ * If `T` includes keys not present in `Base`, a compile-time error
+ * is produced by returning `CustomTypeError`, listing the unknown fields.
+ *
+ * @template T - The type to validate
+ * @template Base - The expected shape
+ *
+ * @example
+ * type Result = Satisfies<
+ * 	//@ts-expect-error { a: string } does not satisfy { a: string; b: number }
+ *    { a: string },
+ *    { a: string; b: number }
+ * >;
+ *
+ * @example <caption>Extra fields are rejected (like `satisfies`)</caption>
+ * type Result = Satisfies<{ a: string; c: boolean }, { a: string }>;
+ * //   ^?
+ * // {
+ * //	[error]: {
+ * //		message: "type may only specify known fields";
+ * //		unknownFields: "c";
+ * //	}
+ * // }
+ */
 export type Satisfies<T extends Base, Base> =
 	Exclude<UnionKey<T>, UnionKey<Base>> extends never
 		? T
