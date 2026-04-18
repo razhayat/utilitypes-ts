@@ -56,7 +56,7 @@ describe("ValueOf", () => {
 		expectTypeOf<Result>().toEqualTypeOf<never>();
 	});
 
-	it("should only take shared keys into account", () => {
+	it("should take all keys into account", () => {
 		type A = {
 			type: "a";
 			valueA: string;
@@ -68,7 +68,9 @@ describe("ValueOf", () => {
 
 		type Result = ValueOf<A | B>;
 
-		expectTypeOf<Result>().toEqualTypeOf<"a" | "b">();
+		expectTypeOf<Result>().toEqualTypeOf<
+			"a" | "b" | string | number | undefined
+		>();
 	});
 
 	it("should respect key constraint", () => {

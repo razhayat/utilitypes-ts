@@ -1,7 +1,7 @@
 import { CustomTypeError } from "./error";
-import { UnionKey } from "./union";
+import { Normalize, UnionKey } from "./union";
 
-export type ValueOf<T, K extends keyof T = keyof T> = T[K];
+export type ValueOf<T, K extends UnionKey<T> = UnionKey<T>> = Normalize<T>[K];
 
 export type Suggestion<Options extends Base, Base = string> =
 	| Options
