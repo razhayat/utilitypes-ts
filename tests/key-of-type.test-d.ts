@@ -49,6 +49,19 @@ describe("KeyOfType", () => {
 		expectTypeOf<Result>().toEqualTypeOf<"a" | "c">();
 	});
 
+	it("should support union types", () => {
+		type A = {
+			a: string;
+		};
+		type B = {
+			b: number;
+		};
+
+		type Result = KeyOfType<A | B, string | undefined>;
+
+		expectTypeOf<Result>().toEqualTypeOf<"a">();
+	});
+
 	it("should work with union value types", () => {
 		type Input = {
 			a: string;
