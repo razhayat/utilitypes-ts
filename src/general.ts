@@ -12,20 +12,20 @@ import { Normalize, UnionKey } from "./union";
  * @template K - Keys of `T` to extract values from (defaults to all keys)
  *
  * @example
+ *
  * type Result = ValueOf<{ a: string; b: number }>;
  * //   ^?
  * // string | number
  *
- * @example
+ * @example <caption>Accepts keys</caption>
+ *
  * type Result = ValueOf<{ a: string; b: number; c: boolean }, "a" | "c">;
  * //   ^?
  * // string | boolean
  *
- * @example
- * type Result = ValueOf<
- *   | { a: string }
- *   | { b: number }
- * >;
+ * @example <caption>Works with unions</caption>
+ *
+ * type Result = ValueOf<{ a: string } | { b: number }>;
  * //   ^?
  * // string | number | undefined
  */
@@ -41,12 +41,14 @@ export type ValueOf<T, K extends UnionKey<T> = UnionKey<T>> = Normalize<T>[K];
  * @template Base - The underlying type (defaults to `string`)
  *
  * @example
+ *
  * type Color = Suggestion<"red" | "blue">;
  *
  * const a: Color = "red";   // ✅ suggested
  * const b: Color = "green"; // ✅ allowed, not suggested
  *
  * @example <caption>Works with non-string base types</caption>
+ *
  * type Size = Suggestion<1 | 2 | 3, number>;
  *
  * const a: Size = 2;  // ✅ suggested
@@ -67,6 +69,7 @@ export type Suggestion<Options extends Base, Base = string> =
  * @template Base - The expected shape
  *
  * @example
+ *
  * type Result = Satisfies<
  * 	//@ts-expect-error { a: string } does not satisfy { a: string; b: number }
  *    { a: string },
@@ -74,6 +77,7 @@ export type Suggestion<Options extends Base, Base = string> =
  * >;
  *
  * @example <caption>Extra fields are rejected (like `satisfies`)</caption>
+ *
  * type Result = Satisfies<{ a: string; c: boolean }, { a: string }>;
  * //   ^?
  * // {

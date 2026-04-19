@@ -6,6 +6,7 @@
  *
  *
  * @example
+ *
  * type Result = UnionKey<
  *   | { a: string }
  *   | { b: number }
@@ -26,6 +27,7 @@ export type UnionKey<T> = T extends T ? keyof T : never;
  * @template K - Keys to normalize (defaults to all keys of the union)
  *
  * @example
+ *
  * type Result = Normalize<
  *   | { type: "a"; a: string }
  *   | { type: "b"; b: number }
@@ -34,8 +36,8 @@ export type UnionKey<T> = T extends T ? keyof T : never;
  * // | { type: "a"; a: string; b?: never }
  * // | { type: "b"; a?: never; b: number }
  *
- * @example
- * // Only normalize specific keys
+ * @example <caption>Normalizing only specific keys</caption>
+ *
  * type Result = Normalize<
  *   | { type: "a"; a: string }
  *   | { type: "b"; b: number },
@@ -63,8 +65,8 @@ export type Normalize<T, K extends UnionKey<T> = UnionKey<T>> = T extends
  *
  * @template T - The target union type
  *
- * @example
- * // Discriminated union becomes "loose"
+ * @example <caption>Discriminated union becomes "loose"</caption>
+ *
  * type Result = Unbind<
  * 	| { kind: "success"; data: string }
  * 	| { kind: "error"; error: Error }
@@ -95,14 +97,14 @@ type ExcludeExtractConstraint<T> =
  * @template T - The source union type
  * @template U - The exclusion type (must conform to `T`)
  *
- * @example
- * // Basic usage (same as Exclude)
+ * @example <caption>Basic usage (same as `Exclude`)</caption>
+ *
  * type Result = StrictExclude<"a" | "b" | "c", "a">;
  * //   ^?
  * // "b" | "c"
  *
- * @example
- * // Excluding a union member by shape
+ * @example <caption>Excluding a union member by shape</caption>
+ *
  * type Input =
  *   | { type: "a"; value: string }
  *   | { type: "b"; value: number };
@@ -111,8 +113,8 @@ type ExcludeExtractConstraint<T> =
  * //   ^?
  * // { type: "b"; value: number }
  *
- * @example
- * // Invalid exclusion is rejected
+ * @example <caption>Invalid exclusion is rejected</caption>
+ *
  * type Input =
  *   | { a: string }
  *   | { b: number };
@@ -137,14 +139,14 @@ export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
  * @template T - The source union type
  * @template U - The extraction type (must conform to `T`)
  *
- * @example
- * // Basic usage (same as Extract)
+ * @example <caption>Basic usage (same as `Extract`)</caption>
+ *
  * type Result = StrictExtract<"a" | "b" | "c", "a">;
  * //   ^?
  * // "a"
  *
- * @example
- * // Extracting a union member by shape
+ * @example <caption>Extracting a union member by shape</caption>
+ *
  * type Input =
  *   | { type: "a"; value: string }
  *   | { type: "b"; value: number };
@@ -153,8 +155,8 @@ export type StrictExclude<T, U extends ExcludeExtractConstraint<T>> = Exclude<
  * //   ^?
  * // { type: "a"; value: string }
  *
- * @example
- * // Invalid extraction is rejected
+ * @example <caption>Invalid extraction is rejected</caption>
+ *
  * type Input =
  *   | { a: string }
  *   | { b: number };
@@ -176,6 +178,7 @@ export type StrictExtract<T, U extends ExcludeExtractConstraint<T>> = Extract<
  * @template T - The union type to convert
  *
  * @example
+ *
  * type Result = UnionToIntersection<
  * 	| { a: string }
  * 	| { b: number }

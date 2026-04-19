@@ -18,20 +18,23 @@ type BuildTuple<
  * @template N - The desired tuple length
  *
  * @example
+ *
  * type Result = Tuple<string, 3>;
  * //   ^?
  * // [string, string, string]
  *
- * @example
+ * @example <caption>Passing `number`</caption>
+ *
+ * type Result = Tuple<boolean, number>;
+ * //   ^?
+ * // boolean[]
+ *
+ * @example <caption>Zero length array</caption>
+ *
  * type Result = Tuple<number, 0>;
  * //   ^?
  * // []
  *
- * @example
- * // Falls back to array when length is not a literal
- * type Result = Tuple<boolean, number>;
- * //   ^?
- * // boolean[]
  */
 export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
 
@@ -45,13 +48,13 @@ export type Tuple<T, N extends number> = BuildTuple<T, N, []>;
  * @template N - The minimum required length
  *
  * @example
- * type Result = MinLengthArray<string, 1>;
- * //   ^?
- * // [string, ...string[]]
  *
- * @example
+ * type Result = MinLengthArray<string, 2>;
+ * //   ^?
+ * // [string, string, ...string[]]
+ *
  * //@ts-expect-error - requires at least 2 elements
- * const invalid: MinLengthArray<boolean, 2> = [true];
+ * const invalid: Result = ["hello"];
  */
 export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
 
@@ -62,6 +65,7 @@ export type MinLengthArray<T, N extends number> = [...Tuple<T, N>, ...T[]];
  * @template T - The element type
  *
  * @example
+ *
  * const a: DeepArray<string> = ["a", "b"];
  * const b: DeepArray<string> = ["a", ["b", "c", []], [["d"]]];
  */

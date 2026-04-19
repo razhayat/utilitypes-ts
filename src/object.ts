@@ -11,14 +11,15 @@ import { UnionKey } from "./union";
  * @template K - Keys to remove (must exist in `UnionKey<T>`)
  *
  * @example
- * // Compile-time error: "b" is not a key of the given type
+ *
  * type Invalid = StrictOmit<
  *   { a: string },
+ *   //@ts-expect-error "b" is not a key of the given type
  *   "b"
  * >;
  *
- * @example
- * // Omits only from the member that has the key
+ * @example <caption>Omits only from the member that has the key</caption>
+ *
  * type Result = StrictOmit<
  *   | { type: "a"; name: string }
  *   | { type: "b"; age: number },
@@ -43,14 +44,15 @@ export type StrictOmit<T, K extends UnionKey<T>> = T extends T
  * @template K - Keys to pick (must exist in `UnionKey<T>`)
  *
  * @example
- * // Compile-time error: "b" is not a key of the given type
+ *
  * type Invalid = StrictPick<
  *   { a: string },
+ *   //@ts-expect-error "b" is not a key of the given type
  *   "b"
  * >;
  *
- * @example
- * // Picks only from the member that has the key
+ * @example <caption>Picks only from the member that has the key</caption>
+ *
  * type Result = StrictPick<
  *   | { type: "a"; name: string }
  *   | { type: "b"; age: number },
@@ -67,6 +69,7 @@ export type StrictPick<T, K extends UnionKey<T>> = T extends T
 /**
  * Equivalent to `Partial<Record<K, V>>`.
  * @example
+ *
  * type Result = PartialRecord<"a" | "b", number>;
  * //   ^?
  * // {
@@ -88,6 +91,7 @@ export type PartialRecord<K extends PropertyKey, V> = Partial<Record<K, V>>;
  * @template T - The type to simplify for display
  *
  * @example
+ *
  * type Result = Prettify<{ a: string } & { b: number }>;
  * //   ^?
  * // { a: string; b: number }
@@ -103,6 +107,7 @@ export type Prettify<T> = {
  * @template V - The value type to match against
  *
  * @example
+ *
  * type Result = KeyOfType<
  * 	{ a: string; b: number; c: string },
  * 	string
@@ -121,6 +126,7 @@ export type KeyOfType<T, V> = keyof {
  * @template K - The key to group by (must be a key of `T` with a `PropertyKey` type)
  *
  * @example
+ *
  * type Apple = {
  * 	type: "fruit";
  * 	color: "green";
@@ -169,16 +175,19 @@ export type GroupBy<T, K extends KeyOfType<T, PropertyKey>> = {
  * @template K - Keys to make required (defaults to all union keys)
  *
  * @example
+ *
  * type Result = MakeRequired<{ a?: string; b?: number }>;
  * //   ^?
  * // { a: string; b: number }
  *
  * @example <caption>Works with unions</caption>
+ *
  * type Result = MakeRequired<{ a?: string } | { b?: number }>;
  * //   ^?
  * // { a: string } | { b: number }
  *
  * @example <caption>Only make specific keys required</caption>
+ *
  * type Result = MakeRequired<{ a?: string } | { b?: number }, "a">;
  * //   ^?
  * // { a: string } | { b?: number }
@@ -197,16 +206,19 @@ export type MakeRequired<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
  * @template K - Keys to make optional (defaults to all union keys)
  *
  * @example
+ *
  * type Result = MakeOptional<{ a: string; b: number }>;
  * //   ^?
  * // { a?: string; b?: number }
  *
  * @example <caption>Works with unions</caption>
+ *
  * type Result = MakeOptional<{ a: string } | { b: number }>;
  * //   ^?
  * // { a?: string } | { b?: number }
  *
  * @example <caption>Only make specific keys optional</caption>
+ *
  * type Result = MakeOptional<{ a: string } | { b: number }, "a">;
  * //   ^?
  * // { a?: string } | { b: number }
@@ -225,16 +237,19 @@ export type MakeOptional<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
  * @template K - Keys to make readonly (defaults to all union keys)
  *
  * @example
+ *
  * type Result = MakeReadonly<{ a: string; b: number }>;
  * //   ^?
  * // { readonly a: string; readonly b: number }
  *
  * @example <caption>Works with unions</caption>
+ *
  * type Result = MakeReadonly<{ a: string } | { b: number }>;
  * //   ^?
  * // { readonly a: string } | { readonly b: number }
  *
  * @example <caption>Only make specific keys readonly</caption>
+ *
  * type Result = MakeReadonly<{ a: string } | { b: number }, "a">;
  * //   ^?
  * // { readonly a: string } | { b: number }
@@ -253,16 +268,19 @@ export type MakeReadonly<T, K extends UnionKey<T> = UnionKey<T>> = T extends T
  * @template K - Keys to make mutable (defaults to all union keys)
  *
  * @example
+ *
  * type Result = MakeMutable<{ readonly a: string; readonly b: number }>;
  * //   ^?
  * // { a: string; b: number }
  *
  * @example <caption>Works with unions</caption>
+ *
  * type Result = MakeMutable<{ readonly a: string } | { readonly b: number }>;
  * //   ^?
  * // { a: string } | { b: number }
  *
  * @example <caption>Only make specific keys mutable</caption>
+ *
  * type Result = MakeMutable<{ readonly a: string } | { readonly b: number }, "a">;
  * //   ^?
  * // { a: string } | { readonly b: number }

@@ -13,6 +13,7 @@ declare const tag: unique symbol;
  * @template Tags - One or more tag identifiers
  *
  * @example
+ *
  * type UserId = Tag<string, "UserId">;
  * type PostId = Tag<string, "PostId">;
  *
@@ -23,6 +24,7 @@ declare const tag: unique symbol;
  * const invalid: UserId = postId;
  *
  * @example <caption>Multiple tags</caption>
+ *
  * type A = Tag<string, "a" | "b">;
  *
  * // Equivalent to having both tags

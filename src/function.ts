@@ -9,6 +9,7 @@
  * @template Source - The input type (defaults to `unknown`)
  *
  * @example
+ *
  * const isString: TypeGuard<string> = (value: unknown) => typeof value === "string";
  *
  * const value: unknown = "hello";
@@ -18,8 +19,8 @@
  *   value.toUpperCase();
  * }
  *
- * @example
- * // Narrowing within a union
+ * @example <caption>Narrowing within a union</caption>
+ *
  * type Input = string | number;
  *
  * const isNumber: TypeGuard<number, Input> = (value: Input) => typeof value === "number";
