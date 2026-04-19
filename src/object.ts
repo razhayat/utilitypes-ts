@@ -1,4 +1,4 @@
-import { UnionKey } from "./union";
+import { Normalize, UnionKey } from "./union";
 
 /**
  * Strictly omits keys `K` from each member of a union `T`.
@@ -114,9 +114,18 @@ export type Prettify<T> = {
  * >;
  * //   ^?
  * // "a" | "c"
+ *
+ * @example <caption>Handles unions by using `Normalize`</caption>
+ *
+ * type A = { a: string };
+ * type B = { b: number };
+ *
+ * type Result = KeyOfType<A | B, string | undefined>;
+ * //   ^?
+ * // "a"
  */
 export type KeyOfType<T, V> = keyof {
-	[K in keyof (T extends T ? T : never) as T[K] extends V ? K : never]: void;
+	[K in UnionKey<T> as Normalize<T>[K] extends V ? K : never]: void;
 };
 
 /**
