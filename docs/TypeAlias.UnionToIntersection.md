@@ -1,4 +1,4 @@
-[**utilitypes-ts v1.0.0**](README.md)
+[**utilitypes-ts v1.0.1**](README.md)
 
 ---
 
