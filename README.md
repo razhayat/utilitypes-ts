@@ -6,5 +6,5 @@ For more information see the [documentation](https://github.com/razhayat/utility
 ## Installation
 
 ```
-npm install isguard-ts
+npm install utilitypes-ts
 ```
