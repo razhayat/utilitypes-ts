@@ -2,12 +2,41 @@
 	"name": "utilitypes-ts",
 	"version": "1.0.0",
 	"description": "Provides TypeScript utility types",
+	"main": "src/index.ts",
 	"scripts": {
 		"prepublishOnly": "bash scripts/publish.sh",
 		"test": "vitest --run",
 		"prepare": "npx husky",
 		"format": "prettier --write .",
 		"docs": "typedoc"
+	},
+	"keywords": [
+		"types",
+		"type safety",
+		"typescript",
+		"ts",
+		"utility",
+		"utility types",
+		"group by",
+		"normalize",
+		"unbind",
+		"strict",
+		"union"
+	],
+	"homepage": "https://github.com/razhayat/utilitypes-ts#readme",
+	"bugs": {
+		"url": "https://github.com/razhayat/utilitypes-ts/issues"
+	},
+	"author": {
+		"name": "Raz Hayat"
+	},
+	"license": "ISC",
+	"files": [
+		"src/*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/razhayat/utilitypes-ts"
 	},
 	"devDependencies": {
 		"husky": "^9.1.7",
