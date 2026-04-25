@@ -2,6 +2,7 @@
 	"name": "utilitypes-ts",
 	"version": "1.0.0",
 	"description": "Provides TypeScript utility types",
+	"main": "src/index.ts",
 	"scripts": {
 		"prepublishOnly": "bash scripts/publish.sh",
 		"test": "vitest --run",
