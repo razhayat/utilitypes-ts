@@ -1,8 +1,8 @@
-**utilitypes-ts v1.0.0**
+**utilitypes-ts v1.0.1**
 
 ---
 
-# utilitypes-ts v1.0.0
+# utilitypes-ts v1.0.1
 
 ## Type Aliases
 
