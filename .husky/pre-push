@@ -1,12 +1,12 @@
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-temporary_branch="@auto/$current_branch/pre-push/$(date +%s)"
+temporary_branch="auto/$current_branch/pre-push/$(date +%s)"
 
 # Snapshot both staged (index) and unstaged (working tree) changes as commits
 git checkout -b "$temporary_branch"
 
-git commit --no-verify --allow-empty -m "@auto/pre-push(index)"
+git commit --no-verify --allow-empty -m "auto/pre-push(index)"
 git add .
-git commit --no-verify --allow-empty -m "@auto/pre-push(working tree)"
+git commit --no-verify --allow-empty -m "auto/pre-push(working tree)"
 
 # Return to original branch and run validations
 git checkout "$current_branch"
@@ -18,7 +18,7 @@ tests_code=$?
 # Generate docs and commit them if anything changed (ignore failure if no changes)
 npm run docs
 git add .
-git commit --no-verify -m "@auto($current_branch) - Updated documentation" || true
+git commit --no-verify -m "auto($current_branch) - Updated documentation" || true
 
 # Restore working state from the temporary branch, then clean it up
 git checkout "$temporary_branch"
