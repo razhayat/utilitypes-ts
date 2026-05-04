@@ -15,11 +15,6 @@ git checkout "$current_branch"
 npm run test
 tests_code=$?
 
-# Generate docs and commit them if anything changed (ignore failure if no changes)
-npm run docs
-git add .
-git commit --no-verify -m "auto($current_branch) - Updated documentation" || true
-
 # Restore working state from the temporary branch, then clean it up
 git checkout "$temporary_branch"
 git reset --mixed HEAD^
