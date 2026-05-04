@@ -1,12 +1,3 @@
 {
-	"entryPoints": ["src/index.ts"],
-	"plugin": ["typedoc-plugin-markdown"],
-	"includeVersion": true,
-	"readme": "none",
-	"sourceLinkTemplate": "../{path}#L{line}",
-
-	// typedoc-plugin-markdown
-	"typeAliasPropertiesFormat": "table",
-	"formatWithPrettier": true,
-	"flattenOutputFiles": true
+	"entryPoints": ["src/index.ts"]
 }
