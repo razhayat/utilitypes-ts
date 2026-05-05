@@ -13,6 +13,10 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "deploy-docs"
+  cancel-in-progress: true
+
 jobs:
   deploy:
     environment:
