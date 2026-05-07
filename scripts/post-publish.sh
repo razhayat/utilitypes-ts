@@ -1,5 +1,3 @@
-npm run test || exit
-
 version=$(npm view ./ version)
 tag_name="v$version"
 

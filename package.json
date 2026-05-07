@@ -4,7 +4,8 @@
 	"description": "Provides TypeScript utility types",
 	"main": "src/index.ts",
 	"scripts": {
-		"prepublishOnly": "bash scripts/publish.sh",
+		"prepublishOnly": "npm run test",
+		"postpublish": "bash scripts/post-publish.sh",
 		"test": "vitest --run",
 		"format": "prettier --write .",
 		"docs": "typedoc"
